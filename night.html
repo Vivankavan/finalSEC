@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>StudySync</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f5f2;--cd:#fff;--tx:#2c3039;--mu:#6e7482;--bd:#e6e6e1;--ac:#6479a8;--a2:#edf0f7;--lv:#e8e4f4;--gr:#d9eadf;--sh:0 1px 2px rgba(30,40,60,.05),0 6px 18px rgba(30,40,60,.05);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16181d;--cd:#1f2229;--tx:#e5e7ec;--mu:#9099a8;--bd:#2c303a;--ac:#8fa4d4;--a2:#262b38;--lv:#2c2940;--gr:#23332b;--sh:0 1px 2px rgba(0,0,0,.3);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#16181d;--cd:#1f2229;--tx:#e5e7ec;--mu:#9099a8;--bd:#2c303a;--ac:#8fa4d4;--a2:#262b38;--lv:#2c2940;--gr:#23332b;--sh:0 1px 2px rgba(0,0,0,.3);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}body{font:15px/1.5 'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+h1,h2,h3{font-weight:500;margin:0}h1{font-size:22px}h2{font-size:16px;margin-bottom:12px}h3{font-size:15px}.mu{color:var(--mu);font-size:13px}
+.app{display:flex;min-height:100vh}nav{width:210px;padding:20px 14px;border-right:1px solid var(--bd);background:var(--cd);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.logo{font-size:18px;font-weight:600;padding:4px 10px 18px;color:var(--ac)}nav button{all:unset;cursor:pointer;padding:9px 12px;border-radius:10px;color:var(--mu);display:flex;gap:10px;transition:.15s}
+nav button:hover{background:var(--a2)}nav button.on{background:var(--a2);color:var(--ac);font-weight:500}nav button:focus-visible,.btn:focus-visible{outline:2px solid var(--ac)}
+main{flex:1;padding:28px;max-width:1100px;margin:0 auto;min-width:0}.hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:10px;flex-wrap:wrap}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:14px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.c{background:var(--cd);border-radius:16px;padding:18px;box-shadow:var(--sh);border:1px solid var(--bd)}.big{font-size:24px;font-weight:500}
+.btn{all:unset;cursor:pointer;background:var(--ac);color:#fff;padding:9px 16px;border-radius:10px;font-size:14px;transition:.15s;text-align:center}.btn:hover{opacity:.88}.btn.s{background:var(--a2);color:var(--ac)}
+input,select{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px 11px;width:100%}label{display:block;font-size:13px;color:var(--mu);margin:10px 0 4px}
+.pb{height:8px;background:var(--a2);border-radius:9px;overflow:hidden}.pb i{display:block;height:100%;background:var(--ac);border-radius:9px;transition:width .4s}
+.bars{display:flex;gap:10px;height:130px;align-items:flex-end}.bc{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;font-size:11px;color:var(--mu)}.bar{width:100%;background:var(--ac);opacity:.75;border-radius:6px 6px 2px 2px}
+.heat{display:flex;gap:4px;overflow-x:auto;padding-bottom:4px}.col{display:flex;flex-direction:column;gap:4px}.col i{width:14px;height:14px;border-radius:4px;background:var(--a2)}
+.l1{background:#cfd9ee!important}.l2{background:#9fb3dc!important}.l3{background:#7189c0!important}.l4{background:#4d63a0!important}.lx{visibility:hidden}
+.row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);gap:10px}.row:last-child{border:0}
+.tag{display:inline-block;background:var(--lv);padding:2px 10px;border-radius:20px;font-size:12px}.clk{font-size:64px;font-weight:500;text-align:center;letter-spacing:2px;font-variant-numeric:tabular-nums;margin:6px 0}
+.ctr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}.fs{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9}.fs .c{width:min(460px,92vw);text-align:center}.fs .clk{font-size:80px}
+.bd{opacity:.4}.bd.on{opacity:1;background:var(--gr)}.badge{padding:12px;border-radius:12px;background:var(--a2);border:1px solid var(--bd)}.tabs{display:flex;gap:6px;margin-bottom:12px}
+.auth{max-width:400px;margin:8vh auto;padding:0 16px}.me{color:#a35}.av{width:64px;height:64px;border-radius:50%;background:var(--lv);object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:24px}
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:12px;z-index:20}
+.tc{cursor:pointer;transition:.15s}.tc:hover{transform:translateY(-2px)}ol{padding-left:20px;margin:6px 0}
+@media(max-width:760px){nav{position:fixed;bottom:0;top:auto;left:0;right:0;width:100%;height:auto;flex-direction:row;z-index:5;border-top:1px solid var(--bd);border-right:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));justify-content:space-around}.logo{display:none}nav button{flex-direction:column;align-items:center;gap:0;font-size:11px;padding:6px}main{padding:18px 14px 90px}.clk{font-size:48px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div id="root"></div><div id="toast" hidden></div>
+<script>
+const $=s=>document.querySelector(s),LS=localStorage,P=n=>String(n).padStart(2,'0');
+const ld=(k,d)=>{try{const v=JSON.parse(LS.getItem(k));return v==null?d:v}catch(e){return d}},sv=(k,v)=>{try{LS.setItem(k,JSON.stringify(v))}catch(e){}};
+let users=ld('ss_users',{}),cur=ld('ss_cur',null),U=cur&&users[cur]||null,page='dash',lbp='weekly',sel=-1,reg=false,focus=false,err='';
+const save=()=>{if(U){users[cur]=U;sv('ss_users',users)}};
+const hash=s=>{let h=5381;for(const c of s)h=(h*33)^c.charCodeAt(0);return String(h>>>0)};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dk=t=>{const d=new Date(t);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const fmt=s=>{s=Math.floor(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+'h '+m+'m':m+'m'};
+const clock=s=>{s=Math.max(0,Math.floor(s));return(s>=3600?P(Math.floor(s/3600))+':':'')+P(Math.floor(s%3600/60))+':'+P(s%60)};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.hidden=false;setTimeout(()=>t.hidden=true,3200)};
+const TECH=[
+['Pomodoro Technique','Work in fixed focus blocks separated by short breaks.','A timer protects your focus, and the breaks let your brain consolidate what you studied.','Starting tasks you are avoiding, long reading, routine practice.','Pick one task|Set a 25-minute timer|Work without interruptions|Take a 5-minute break|After four rounds, take a 15–30 minute break','Solve three normalisation problems in one 25-minute block.'],
+['Active Recall','Test yourself instead of rereading.','Retrieving information strengthens memory far more than passive review.','After finishing a chapter, before exams.','Close your notes|Write questions on the topic|Answer from memory|Check your notes|Revisit the gaps','Close the OS notes and list every scheduling algorithm you remember.'],
+['Spaced Repetition','Review material at increasing intervals.','Reviewing just before you forget flattens the forgetting curve.','Long-term subjects, vocabulary, formulas.','Learn the topic|Review after 1 day|Review after 3 days|Review after 7 days|Review after 21 days','Revisit SQL joins on days 1, 3, 7 and 21.'],
+['Feynman Technique','Explain a concept in simple language.','Teaching exposes the parts you only think you understand.','Hard theory, new concepts.','Pick a concept|Explain it as if to a child|Find where you struggle|Go back to the source|Simplify your explanation again','Explain recursion to a friend with no coding background.'],
+['Blurting Method','Write everything you remember about a topic.','A blank page shows exactly what you know and what you missed.','Revision after a first read.','Read a section|Hide the notes|Write everything you recall|Compare with the notes|Mark missing points in a different colour','Blurt all properties of a binary search tree.'],
+['Interleaved Learning','Alternate between different subjects or problem types.','Switching forces your brain to choose the right method, which improves transfer.','Exam practice, mixed problem sets.','Pick two or three subjects|Study each for 25–40 minutes|Rotate in a fixed order|Review mistakes at the end','Alternate DSA problems, maths integrals and DBMS queries.'],
+['Mind Mapping','Visually connect concepts around a central idea.','Spatial links make relationships between ideas easier to remember.','Overviews, essay planning, topics with many parts.','Write the topic in the centre|Add main branches|Add sub-branches|Use colours and short keywords|Redraw it from memory','Map TCP/IP layers with protocols on each branch.'],
+['SQ3R Method','Survey, Question, Read, Recite, Review.','A structured reading routine that turns reading into active study.','Textbook chapters and research papers.','Survey headings and summaries|Turn headings into questions|Read to answer them|Recite answers aloud|Review the whole chapter','Read a computer networks chapter using its headings as questions.'],
+['Leitner System','Flashcards sorted into boxes by how well you know them.','Cards you know move up and appear less often; missed cards return to box 1.','Definitions, terms, language learning.','Make flashcards|Start all cards in box 1|Correct answer: move up one box|Wrong answer: back to box 1|Review higher boxes less often','Cards for OOP terms: polymorphism, encapsulation, abstraction.'],
+['Time Blocking','Assign specific time slots to subjects.','Planned blocks reduce decision fatigue and protect time for important work.','Busy weeks, exam preparation.','List subjects and deadlines|Estimate time needed|Assign blocks in your calendar|Include breaks|Review at the end of the day','Mon 6–8 pm: Maths. Tue 6–8 pm: DBMS. Wed 6–8 pm: Project.']].map(t=>({n:t[0],w:t[1],h:t[2],u:t[3],s:t[4].split('|'),e:t[5]}));
+const BADGES=[['First Session','Complete one session',s=>s.n>=1],['3-Day Streak','Study 3 days in a row',s=>s.lg>=3],['7-Day Streak','Study 7 days in a row',s=>s.lg>=7],['14-Day Streak','Study 14 days in a row',s=>s.lg>=14],['30-Day Streak','Study 30 days in a row',s=>s.lg>=30],['10 Hours','Study 10 hours in total',s=>s.tot>=36000],['Goal Reached','Meet today’s goal',s=>s.today>=U.goal*60],['Explorer','Use 3 techniques',s=>s.nt>=3],['Level 5','Reach level 5',s=>s.lv>=5]];
+function stats(){const ss=U.sessions,now=Date.now(),by={},sub={},tc={};let tot=0;
+ss.forEach(s=>{tot+=s.dur;const k=dk(s.t);by[k]=(by[k]||0)+s.dur;sub[s.sub]=(sub[s.sub]||0)+s.dur;tc[s.tech]=(tc[s.tech]||0)+s.dur});
+const day=n=>by[dk(now-n*864e5)]||0;let wk=0,mo=0;for(let i=0;i<7;i++)wk+=day(i);for(let i=0;i<30;i++)mo+=day(i);
+let st=0,i=day(0)?0:1;while(day(i)){st++;i++}
+const ks=Object.keys(by).map(k=>{const[y,m,d]=k.split('-');return new Date(y,m-1,d).getTime()}).sort((a,b)=>a-b);let lg=0,run=0;
+ks.forEach((t,j)=>{run=j&&Math.round((t-ks[j-1])/864e5)===1?run+1:1;lg=Math.max(lg,run)});
+const xp=ss.reduce((a,s)=>a+10+Math.floor(s.dur/60)*2,0),lv=Math.floor(Math.sqrt(xp/40))+1;
+return{by,sub,tc,tot,day,today:day(0),wk,mo,st,lg:Math.max(lg,st),xp,lv,n:ss.length,nt:Object.keys(tc).length}}
+const PEERS=[['Aarav',2.4],['Diya',1.9],['Kabir',3],['Meera',1.2],['Rohan',2.1],['Sana',.8],['Vihaan',2.7]];
+function board(p,s){const m=p=='daily'?1:p=='weekly'?5.2:21,me=(p=='daily'?s.today:p=='weekly'?s.wk:s.mo)/3600;
+return PEERS.map(x=>({n:x[0],h:x[1]*m})).concat([{n:'You',h:me,me:1}]).sort((a,b)=>b.h-a.h)}
+/* timer */
+const T0=()=>({mode:'pomodoro',phase:'focus',focus:25,short:5,long:15,cyc:0,run:false,st:0,acc:0,sub:'Data Structures',topic:'',tech:0});
+const el=()=>{const T=U.timer;return T.acc+(T.run?(Date.now()-T.st)/1000:0)};
+const target=()=>{const T=U.timer;return T.mode=='stopwatch'?0:T.phase=='focus'?T.focus*60:(T.cyc%4==0?T.long:T.short)*60};
+function rec(d){const T=U.timer;if(T.phase!='focus'||d<5)return;U.sessions.push({t:Date.now()-d*1000,dur:Math.round(d),sub:T.sub||'General',topic:T.topic,tech:T.tech});save()}
+function tick(){if(!U)return;const T=U.timer,e=el(),tg=target();
+if(tg&&T.run&&e>=tg){T.acc=tg;T.run=false;if(T.phase=='focus'){rec(tg);T.cyc++;T.phase='break';toast('Focus session saved. Time for a break.')}else T.phase='focus';T.acc=0;save();render();return}
+const c=$('#clk');if(c){c.textContent=clock(tg?tg-e:e);$('#ph').textContent=T.phase=='focus'?'Focus':'Break'}
+document.title=T.run?clock(tg?tg-e:e)+' · StudySync':'StudySync'}
+setInterval(tick,250);
+const go=()=>{const T=U.timer;if(T.run){T.acc=el();T.run=false}else{T.run=true;T.st=Date.now()}save();render()};
+const stop=()=>{rec(el());Object.assign(U.timer,{run:false,acc:0,phase:'focus'});save();render()};
+const rst=()=>{Object.assign(U.timer,{run:false,acc:0});save();render()};
+const setT=(k,v,r)=>{U.timer[k]=v;if(r&&!U.timer.run){U.timer.acc=0;U.timer.phase='focus'}save();if(r)render()};
+const nav=[['dash','Dashboard','◧'],['timer','Timer','◷'],['tech','Techniques','✦'],['acad','Academics','▤'],['rew','Rewards','★'],['lb','Leaders','♛'],['me','Profile','☺']];
+const bar=(v,m)=>`<div class=pb><i style="width:${Math.min(100,v/m*100)}%"></i></div>`;
+function timerCard(){const T=U.timer,e=el(),tg=target(),opt=(a,v)=>a.map((x,i)=>`<option value="${typeof v=='function'?v(x,i):x}"${(typeof v=='function'?v(x,i):x)==T.sel?'':''}>${x}</option>`).join('');
+const btns=`<div class=ctr><button class=btn onclick="go()">${T.run?'Pause':T.acc?'Resume':'Start'}</button><button class="btn s" onclick="stop()">Stop &amp; save</button><button class="btn s" onclick="rst()">Reset</button><button class="btn s" onclick="focus=!focus;render()">${focus?'Exit focus':'Focus mode'}</button></div>`;
+const head=`<div class=mu id=ph>${T.phase=='focus'?'Focus':'Break'}</div><div class=clk id=clk>${clock(tg?tg-e:e)}</div>`;
+if(focus)return head+`<div class=mu>${esc(T.sub)}${T.topic?' · '+esc(T.topic):''} · ${TECH[T.tech].n}</div>`+btns;
+const subs=[...new Set(['Mathematics','Data Structures','DBMS','Operating Systems','Physics',...U.sessions.map(s=>s.sub),T.sub])];
+return head+btns+`<div class="g g2" style="margin-top:14px"><div><label>Subject</label><input list=sl value="${esc(T.sub)}" onchange="setT('sub',this.value)"><datalist id=sl>${subs.map(s=>`<option value="${esc(s)}">`).join('')}</datalist><label>Topic</label><input value="${esc(T.topic)}" onchange="setT('topic',this.value)" placeholder="e.g. Binary trees"></div>
+<div><label>Technique</label><select onchange="setT('tech',+this.value)">${TECH.map((t,i)=>`<option value=${i}${i==T.tech?' selected':''}>${t.n}</option>`).join('')}</select><label>Mode</label><select onchange="setT('mode',this.value,1)">${[['pomodoro','Pomodoro'],['custom','Custom focus'],['stopwatch','Stopwatch']].map(m=>`<option value=${m[0]}${m[0]==T.mode?' selected':''}>${m[1]}</option>`).join('')}</select></div></div>
+${T.mode!='stopwatch'?`<div class=g style="margin:0"><div><label>Focus (min)</label><input type=number min=1 max=180 value=${T.focus} onchange="setT('focus',Math.max(1,+this.value||25),1)"></div><div><label>Short break</label><input type=number min=1 value=${T.short} onchange="setT('short',Math.max(1,+this.value||5))"></div><div><label>Long break</label><input type=number min=1 value=${T.long} onchange="setT('long',Math.max(1,+this.value||15))"></div></div>`:''}`}
+const V={
+dash(){const s=stats(),r=board('weekly',s).findIndex(x=>x.me)+1,vals=[0,1,2,3,4,5,6].map(i=>s.day(6-i)),mx=Math.max(...vals,1);
+const bars=vals.map((v,i)=>`<div class=bc><div class=bar style="height:${Math.max(3,v/mx*100)}%" title="${fmt(v)}"></div>${new Date(Date.now()-(6-i)*864e5).toLocaleDateString('en',{weekday:'short'})}</div>`).join('');
+const recent=U.sessions.slice(-5).reverse().map(x=>`<div class=row><span>${esc(x.sub)}${x.topic?' · '+esc(x.topic):''}<br><span class=mu>${TECH[x.tech].n} · ${new Date(x.t).toLocaleDateString()}</span></span><span>${fmt(x.dur)}</span></div>`).join('')||'<p class=mu>No sessions yet. Start the timer to log your first one.</p>';
+return`<div class=hd><div><h1>Hello, ${esc(U.name.split(' ')[0])}</h1><div class=mu>${U.goalText?esc(U.goalText):'Set a personal academic goal in your profile.'}</div></div><button class=btn onclick="page='timer';render()">Start studying</button></div>
+<div class=g>${[['Total study',fmt(s.tot)],['Today',fmt(s.today)],['Current streak',s.st+' days'],['Longest streak',s.lg+' days'],['This week',fmt(s.wk)],['This month',fmt(s.mo)],['Level',s.lv+' · '+s.xp+' XP'],['Weekly rank','#'+r],['Attendance',attPct()+'%'],['Pending tasks',pend().length],['Completed tasks',U.tasks.filter(t=>t.done).length]].map(x=>`<div class=c><div class=mu>${x[0]}</div><div class=big>${x[1]}</div></div>`).join('')}</div>
+<div class="g g2"><div class=c><h2>Daily goal</h2>${bar(s.today,U.goal*60)}<p class=mu>${fmt(s.today)} of ${U.goal} min today</p><h2 style="margin-top:16px">Last 7 days</h2><div class=bars>${bars}</div></div>
+<div class=c><h2>Recent sessions</h2>${recent}</div></div>
+<div class=c style="margin-bottom:14px"><h2>Upcoming deadlines</h2>${dueList(pend().slice(0,4))}</div><div class=c><h2>Study activity</h2><div class=heat>${heat(s.by)}</div></div>`},
+timer(){const s=stats(),sub=Object.entries(s.sub).sort((a,b)=>b[1]-a[1]).map(x=>`<div class=row><span>${esc(x[0])}</span><span>${fmt(x[1])}</span></div>`).join('')||'<p class=mu>No data yet.</p>';
+const h=U.sessions.slice(-8).reverse().map(x=>`<div class=row><span>${esc(x.sub)}<br><span class=mu>${TECH[x.tech].n} · ${new Date(x.t).toLocaleString()}</span></span><span>${fmt(x.dur)}</span></div>`).join('')||'<p class=mu>Completed sessions appear here and survive refreshes.</p>';
+return`<div class=hd><h1>Study timer</h1><span class=mu>Today ${fmt(s.today)} · This week ${fmt(s.wk)}</span></div><div class=c>${timerCard()}</div><div class="g g2" style="margin-top:14px"><div class=c><h2>Session history</h2>${h}</div><div class=c><h2>Time per subject</h2>${sub}</div></div>`},
+tech(){const s=stats();let d='';if(sel>=0){const t=TECH[sel];d=`<div class=c style="margin-bottom:14px"><div class=hd><h2 style="margin:0">${t.n}</h2><span class=mu>Time spent: ${fmt(s.tc[sel]||0)}</span></div><p><b>What it is:</b> ${t.w}</p><p><b>How it works:</b> ${t.h}</p><p><b>When to use it:</b> ${t.u}</p><b>Steps</b><ol>${t.s.map(x=>`<li>${x}</li>`).join('')}</ol><p><b>Example:</b> ${t.e}</p><div class=ctr style="justify-content:flex-start"><button class=btn onclick="startT(${sel})">Start a session</button><button class="btn s" onclick="U.pref=${sel};save();toast('Preferred technique saved');render()">${U.pref==sel?'Preferred ✓':'Set as preferred'}</button></div></div>`}
+return`<div class=hd><h1>Study techniques</h1><span class=mu>Preferred: ${TECH[U.pref].n}</span></div>${d}<div class=g style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${TECH.map((t,i)=>`<div class="c tc" onclick="sel=${i};render();scrollTo(0,0)"><h3>${t.n}</h3><p class=mu>${t.w}</p>${s.tc[i]?`<span class=tag>${fmt(s.tc[i])}</span>`:''}${U.pref==i?' <span class=tag>Preferred</span>':''}</div>`).join('')}</div>`},
+rew(){const s=stats(),lo=40*(s.lv-1)**2,hi=40*s.lv**2;
+return`<div class=hd><h1>Streaks &amp; rewards</h1></div><div class="g g2"><div class=c><h2>Level ${s.lv}</h2>${bar(s.xp-lo,hi-lo)}<p class=mu>${s.xp} XP · ${hi-s.xp} XP to level ${s.lv+1}. Each session earns 10 XP plus 2 per minute.</p></div>
+<div class=c><h2>Goals</h2>${[['Daily',s.today/60,U.goal,'min'],['Weekly',s.wk/3600,U.wk,'h'],['Monthly',s.mo/3600,U.mo,'h']].map(g=>`<div style="margin-bottom:10px"><div class=mu>${g[0]}: ${Math.round(g[1]*10)/10} / ${g[2]} ${g[3]}${g[1]>=g[2]?' ✓ complete':''}</div>${bar(g[1],g[2])}</div>`).join('')}</div></div>
+<div class=g><div class=c><div class=mu>Current streak</div><div class=big>${s.st} days</div></div><div class=c><div class=mu>Longest streak</div><div class=big>${s.lg} days</div></div></div>
+<div class=c><h2>Achievements</h2><div class=g style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin:0">${BADGES.map(b=>`<div class="badge bd ${b[2](s)?'on':''}"><b>${b[0]}</b><div class=mu>${b[1]}</div></div>`).join('')}</div></div>
+<div class=c style="margin-top:14px"><h2>Activity heatmap</h2><div class=heat>${heat(s.by)}</div></div>`},
+lb(){const s=stats(),b=board(lbp,s);
+return`<div class=hd><h1>Leaderboard</h1></div><div class=tabs>${['daily','weekly','monthly'].map(p=>`<button class="btn ${p==lbp?'':'s'}" onclick="lbp='${p}';render()">${p[0].toUpperCase()+p.slice(1)}</button>`).join('')}</div><div class=c>${b.map((x,i)=>`<div class=row style="${x.me?'background:var(--a2);margin:0 -10px;padding:9px 10px;border-radius:10px':''}"><span>${i+1}. ${x.me?'<b>You</b>':esc(x.n)}</span><span>${fmt(x.h*3600)}</span></div>`).join('')}</div><p class=mu>Peers are demo students. Connect a database to compete with real classmates.</p>`},
+me(){const s=stats();return`<div class=hd><h1>Profile &amp; settings</h1></div><div class="g g2"><div class=c><div style="display:flex;gap:14px;align-items:center">${U.pic?`<img class=av src="${U.pic}" alt="">`:`<div class=av>${esc(U.name[0]||'?')}</div>`}<div><b>${esc(U.name)}</b><div class=mu>${esc(U.email)}</div><input type=file accept="image/*" onchange="pic(event)" style="border:0;padding:4px 0;font-size:12px"></div></div>
+${[['name','Name'],['college','College'],['course','Course'],['goalText','Academic goal']].map(f=>`<label>${f[1]}</label><input value="${esc(U[f[0]])}" onchange="U.${f[0]}=this.value;save()">`).join('')}</div>
+<div class=c><h2>Preferences</h2>${[['goal','Daily goal (minutes)'],['wk','Weekly goal (hours)'],['mo','Monthly goal (hours)']].map(f=>`<label>${f[1]}</label><input type=number min=1 value=${U[f[0]]} onchange="U.${f[0]}=Math.max(1,+this.value||1);save()">`).join('')}
+<label>Preferred technique</label><select onchange="U.pref=+this.value;save()">${TECH.map((t,i)=>`<option value=${i}${i==U.pref?' selected':''}>${t.n}</option>`).join('')}</select>
+<div class=ctr style="justify-content:flex-start;margin-top:16px"><button class="btn s" onclick="U.dark=!U.dark;save();render()">${U.dark?'Switch to light mode':'Switch to dark mode'}</button><button class="btn s" onclick="logout()">Log out</button></div></div></div>`}};
+function heat(by){let h='';const n=new Date(),st=new Date(n);st.setDate(n.getDate()-(14*7+n.getDay()));
+for(let w=0;w<15;w++){h+='<div class=col>';for(let d=0;d<7;d++){const t=new Date(st);t.setDate(st.getDate()+w*7+d);const v=t>n?-1:(by[dk(t)]||0)/60;h+=`<i class="${v<0?'lx':v==0?'':v<20?'l1':v<60?'l2':v<120?'l3':'l4'}" title="${t.toDateString()}: ${Math.round(v)} min"></i>`}h+='</div>'}return h}
+const pend=()=>(U.tasks||[]).filter(t=>!t.done).sort((a,b)=>a.due<b.due?-1:1);
+const dleft=d=>Math.round((new Date(d+'T00:00:00')-new Date(new Date().toDateString()))/864e5);
+const dtxt=d=>{const n=dleft(d);return n<0?Math.abs(n)+' days overdue':n==0?'Due today':n==1?'Due tomorrow':'Due in '+n+' days'};
+const attPct=()=>{let a=0,t=0;for(const k in U.att||{}){a+=U.att[k].a;t+=U.att[k].t}return t?Math.round(a/t*100):0};
+const dueList=l=>l.map(t=>`<div class=row><span>${esc(t.title)}<br><span class=mu>${esc(t.sub)} · ${t.type}</span></span><span class=mu style="${dleft(t.due)<0?'color:#b4534f':''}">${dtxt(t.due)}</span></div>`).join('')||'<p class=mu>Nothing due. Add assignments and tests in Academics.</p>';
+function advice(a,t){const g=U.tg;if(!t)return'Log your first class to see how many you can miss.';if(a*100/t>=g){const m=Math.floor(a*100/g-t);return m>0?`You can miss ${m} more class${m>1?'es':''} and stay at ${g}%.`:`You are right at ${g}%. Attend the next class.`}const n=Math.ceil((g*t-100*a)/(100-g));return`Attend the next ${n} class${n>1?'es':''} in a row to reach ${g}%.`}
+const keyAt=i=>Object.keys(U.att)[i];
+const att=(i,p)=>{const o=U.att[keyAt(i)];o.t++;if(p)o.a++;save();render()};
+const setAT=(i,k,v)=>{const o=U.att[keyAt(i)];o[k]=Math.max(0,Math.floor(+v||0));if(o.a>o.t){if(k=='t')o.t=o.a;else o.a=o.t}save();render()};
+const addSub=()=>{const v=$('#ns').value.trim();if(!v)return;U.att[v]=U.att[v]||{a:0,t:0};save();render()};
+const addTask=()=>{const f=id=>$('#'+id).value.trim();if(!f('ts')||!f('tt')||!f('td'))return toast('Add a subject, title and due date');U.tasks.push({id:Date.now(),sub:f('ts'),title:f('tt'),type:f('ty'),due:f('td'),done:false});save();render()};
+const tog=id=>{const t=U.tasks.find(x=>x.id==id);t.done=!t.done;save();render()};
+const del=id=>{U.tasks=U.tasks.filter(x=>x.id!=id);save();render()};
+V.acad=function(){const subs=Object.keys(U.att);
+const cards=subs.map((s,i)=>{const o=U.att[s],p=o.t?Math.round(o.a/o.t*100):0;return`<div class=c><div style="display:flex;justify-content:space-between;margin-bottom:8px"><h3>${esc(s)}</h3><span class=big>${p}%</span></div>${bar(p,100)}<p class=mu>${o.a} of ${o.t} classes attended. ${advice(o.a,o.t)}</p><div class=ctr style="justify-content:flex-start"><button class=btn onclick="att(${i},1)">Present</button><button class="btn s" onclick="att(${i},0)">Absent</button></div><div class=g style="margin:8px 0 0"><div><label>Attended</label><input type=number min=0 value=${o.a} onchange="setAT(${i},'a',this.value)"></div><div><label>Total classes</label><input type=number min=0 value=${o.t} onchange="setAT(${i},'t',this.value)"></div></div></div>`}).join('')||'<p class=mu>Add your first subject to start tracking attendance.</p>';
+const gs=[...new Set(U.tasks.map(t=>t.sub))].map(s=>`<div class=c><h2>${esc(s)}</h2>${U.tasks.filter(t=>t.sub==s).sort((a,b)=>a.due<b.due?-1:1).map(t=>`<div class=row style="${t.done?'opacity:.5':''}"><span><span class=tag>${t.type}</span> ${t.done?'<s>'+esc(t.title)+'</s>':esc(t.title)}<br><span class=mu>${t.due}${t.done?'':' · '+dtxt(t.due)}</span></span><span><button class="btn s" onclick="tog(${t.id})">${t.done?'Undo':'Done'}</button> <button class="btn s" onclick="del(${t.id})">Remove</button></span></div>`).join('')}</div>`).join('')||'<p class=mu>No assignments or tests yet. Add one above.</p>';
+return`<div class=hd><h1>Academics</h1><span class=mu>Overall attendance ${attPct()}%</span></div>
+<div class=hd><h2 style="margin:0">Attendance</h2><div style="display:flex;gap:8px;align-items:center"><span class=mu>Required %</span><input type=number min=1 max=95 value=${U.tg} style="width:80px" onchange="U.tg=Math.min(95,Math.max(1,+this.value||75));save();render()"></div></div>
+<div class=c style="margin-bottom:14px;display:flex;gap:8px"><input id=ns placeholder="New subject, e.g. Operating Systems"><button class=btn onclick="addSub()">Add subject</button></div><div class="g g2">${cards}</div>
+<h2 style="margin-top:24px">Assignments &amp; tests</h2><div class=c style="margin-bottom:14px"><div class=g style="margin:0"><div><label>Subject</label><input id=ts list=sj><datalist id=sj>${subs.map(s=>`<option value="${esc(s)}">`).join('')}</datalist></div><div><label>Title</label><input id=tt placeholder="e.g. Unit 3 test"></div><div><label>Type</label><select id=ty><option>Assignment</option><option>Test</option></select></div><div><label>Due date</label><input id=td type=date></div></div><div class=ctr style="justify-content:flex-start"><button class=btn onclick="addTask()">Add</button></div></div><div class="g g2">${gs}</div>`};
+function startT(i){const T=U.timer;if(T.run)return toast('Stop the running session first');T.tech=i;T.mode=i==0?'pomodoro':'custom';T.acc=0;T.phase='focus';save();page='timer';render()}
+function pic(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=c.height=96;c.getContext('2d').drawImage(i,0,0,96,96);U.pic=c.toDataURL('image/jpeg',.8);save();render()};i.src=r.result};r.readAsDataURL(f)}
+function logout(){cur=null;U=null;sv('ss_cur',null);render()}
+function auth(e){e.preventDefault();const f=Object.fromEntries(new FormData(e.target)),em=(f.email||'').trim().toLowerCase();err='';
+if(reg){if(users[em])err='An account with this email already exists. Log in instead.';else if((f.pw||'').length<6)err='Use a password with at least 6 characters.';
+else{users[em]={name:f.name.trim(),email:em,pw:hash(f.pw),college:f.college,course:f.course,goalText:'',goal:120,wk:10,mo:40,pref:0,dark:false,sessions:[],timer:T0()}}}
+else if(!users[em]||users[em].pw!==hash(f.pw||''))err='Email or password is incorrect.';
+if(!err){cur=em;U=users[em];sv('ss_cur',em);sv('ss_users',users);page='dash'}render()}
+function render(){if(U){U.att=U.att||{};U.tasks=U.tasks||[];U.tg=U.tg||75}document.documentElement.dataset.theme=U?(U.dark?'dark':'light'):'';const R=$('#root');
+if(!U){const f=(n,l,t='text',r=1)=>`<label>${l}</label><input name=${n} type=${t} ${r?'required':''}>`;
+R.innerHTML=`<div class=auth><div class=logo style="padding:0 0 6px;font-size:26px">StudySync</div><p class=mu>Study timer, techniques, streaks and leaderboard in one place.</p><form class=c onsubmit="auth(event)"><h2>${reg?'Create your account':'Welcome back'}</h2>${reg?f('name','Full name')+f('college','College')+f('course','Course (e.g. B.Tech CSE)'):''}${f('email','Email','email')}${f('pw','Password','password')}${err?`<p style="color:#b4534f;font-size:13px">${err}</p>`:''}<div class=ctr><button class=btn style="width:100%">${reg?'Register':'Log in'}</button></div><p class=mu style="text-align:center;margin:12px 0 0">${reg?'Already registered?':'New here?'} <a href=# onclick="reg=!reg;err='';render();return false" style="color:var(--ac)">${reg?'Log in':'Create an account'}</a></p></form></div>`;return}
+if(focus&&page=='timer'){R.innerHTML=`<div class=fs><div class=c>${timerCard()}</div></div>`;return}
+R.innerHTML=`<div class=app><nav><div class=logo>StudySync</div>${nav.map(n=>`<button class="${n[0]==page?'on':''}" onclick="page='${n[0]}';render()"><span>${n[2]}</span>${n[1]}</button>`).join('')}</nav><main>${V[page]()}</main></div>`}
+render();
+</script></body></html>
